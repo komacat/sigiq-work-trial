@@ -22,11 +22,6 @@ function InteractableSlide({ children }: { children: React.ReactNode }) {
         })
         // emit result to be handled by backend
         emitter.emit('state', JSON.stringify(result))
-
-        emitter.on('point', async (i: Instruction) => {
-            await pointTo(i.payload.elementId)
-            emitter.emit('tutor-done', null)
-        })
     }, [])
     return (
         <div ref={container} className="m-8 h-full bg-white p-8">

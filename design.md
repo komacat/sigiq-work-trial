@@ -57,7 +57,9 @@ client cannot act until server is done
 - Strive for clear boundaries so that an LLM (or another engineer) can reason
   about the component graph.
 
-Deliverables: 
-1. A mocked backend with a scripted dialog. 
+Deliverables:
+
+1. A mocked backend with a scripted dialog.
 2. <InteractableSlide>
+
 - one slide that interacts via POINT.

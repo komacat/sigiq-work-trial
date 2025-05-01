@@ -1,19 +1,28 @@
 "use client"
+import emitter from "@/utils/emitter"
 
-import emitter from '@/utils/emitter'
-import { Navigate } from 'react-router-dom'
-
-function Start() {
+export function Start({ sessionActive, setSessionActive }: {sessionActive: boolean, setSessionActive: (arg0: boolean) => void}) {
     function handleStart() {
+        if (!sessionActive) {
         console.log('client-done')
-        emitter.emit('client-done', null)
+        emitter.emit('client-done')
+        setSessionActive(true)
+
+        } else {
+            console.log("session active")
+        }
     }
-    return (
-        <div className="flex h-full w-full items-center justify-between bg-gray-200 px-8">
+    if (!sessionActive) {
+        return (
             <button className="m-4 bg-green-200 p-4" onClick={handleStart}>
                 start
             </button>
-        </div>
-    )
+        )
+    } else {
+        return (
+            <button className="m-4 bg-gray-200 p-4">
+                session in progress
+            </button>
+        )
+    }
 }
-export default Start

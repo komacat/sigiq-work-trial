@@ -35,10 +35,8 @@ function connect() {
             }
         })
         ws.on('close', () => {
-            console.log('Client disconnected, attempting to reconnnect in 1 second') // add better reconnection method
-            setTimeout(function () {
-                connect()
-            }, 1000)
+            console.log('Client disconnected, attempting to reconnnect') // add better reconnection method
+            ws.close()
         })
     })
 }

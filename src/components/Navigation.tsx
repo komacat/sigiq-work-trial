@@ -1,34 +1,46 @@
 'use client'
+import { useEffect,useState, useContext } from 'react'
+import { Start } from './Start'
 import emitter from '@/utils/emitter'
-import { useEffect, useRef, useState } from 'react'
+import { stateContext } from '@/context/stateContext'
 
 function Navigation() {
-    const [spaceDown, setSpaceDown] = useState(false)
-    const [spaceUp, setSpaceUp] = useState(false)
+    const context = useContext(stateContext)
+    
+    const [sessionActive, setSessionActive] = useState(false)
     const [isSpeaking, setIsSpeaking] = useState(false)
 
+    const [spaceDown, setSpaceDown] = useState(false)
+    const [spaceUp, setSpaceUp] = useState(false)
+
     function downHandler(event: KeyboardEvent) {
+        console.log(context.state)
         if (event.code === 'Space') {
+            console.log("spacedown")
             setSpaceDown(true)
         }
     }
 
     function upHandler(event: KeyboardEvent) {
-        if (event.code === 'Space') {
+        if (event.code === 'Space' && context.state === "client") {
+            console.log("spaceup")
             setSpaceUp(true)
         }
     }
 
-    function handleStart() {
-        console.log('client-done')
-        emitter.emit('client-done', null)
-    }
-
     function monitorSpeech() {
-        if (spaceDown === true && spaceUp === false) {
-            setIsSpeaking(true)
-        } else if (spaceUp === true) {
-            setIsSpeaking(false)
+        console.log("monitorspeech: ", context.state, sessionActive)
+        if (sessionActive && context.state === "client") {
+            console.log("Test")
+            if (spaceDown === true && spaceUp === false) {
+                setIsSpeaking(true)
+            } else if (spaceUp === true) {
+                setIsSpeaking(false)
+                setSpaceDown(false)
+                setSpaceUp(false)
+                emitter.emit('client-done')
+            }
+        } else {
             setSpaceDown(false)
             setSpaceUp(false)
         }
@@ -47,16 +59,12 @@ function Navigation() {
         monitorSpeech()
     }, [spaceDown, spaceUp])
 
-    useEffect(() => {
-        console.log(isSpeaking)
-    }, [isSpeaking])
-
     return (
         <div className="flex h-24 w-full items-center justify-between bg-gray-200 px-8">
-            <button className="m-4 bg-green-200 p-4" onClick={handleStart}>
-                start
+            <Start sessionActive={sessionActive} setSessionActive={setSessionActive} />
+            <button className={isSpeaking ? 'm-4 bg-red-300 p-4' : 'm-4 bg-red-200 p-4'}>
+                press space to speak
             </button>
-            <button className={isSpeaking ? 'bg-red-300 m-4 p-4' : 'bg-red-200 m-4 p-4'}>press space to speak</button>
         </div>
     )
 }

@@ -30,7 +30,9 @@
         "src/components/WSContext.jsx",
         "src/WSContext.js",
         "src/components/WSConsumer.jsx",
-        "server/server.js"
+        "server/server.js",
+        "src/context/themeContext.js",
+        "src/context/themeContext.js"
     ],
     "exclude": ["node_modules"]
 }

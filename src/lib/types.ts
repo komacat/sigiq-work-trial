@@ -19,6 +19,11 @@ export type Point = {
 }
 
 export type ThemeContext = {
-    theme: string,
+    theme: string
     toggleTheme: () => void
+}
+
+export type StateContext = {
+    state: string
+    setState: (arg0: string) => void
 }
