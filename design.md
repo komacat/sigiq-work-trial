@@ -2,7 +2,8 @@
 
 ## WebSocket buffering & reconnect handling
 
-- useWebsocket to handle automatic reconnect on error
+- use Node.js ws
+- reconnect on close after 1 second
 - received data will be in a buffer
 
 ## How your component discovers and serialises interactables
@@ -21,15 +22,19 @@
 ## State management / internal event bus
 
 1. mock backend sends JSON to client through websocket
-   - interaction: POINT
-   - payload {...}
+    - interaction: POINT
+    - payload {...}
 2. case POINT:
-   - use event emitter to start the animation for POINT
-   - ex. emitter.on('POINT', handlePoint(src, dest)) : should the tutor pointer remain at last dest until next POINT and update (src = dest, dest = newDest) or have src be the same location every time and be removed from screen once control goes back to client
+    - use event emitter to start the animation for POINT
+    - ex. emitter.on('POINT', handlePoint(src, dest)) : should the tutor pointer remain at last dest until next POINT and update (src = dest, dest = newDest) or have src be the same location every time and be removed from screen once control goes back to client
+
+need both server and client to know whose 'turn' it is to act
+server waits on client input
+client cannot act until server is done
 
 ## Your choice of DOM vs React updates
 
-- 
+- DOM update on POINT, HIGHLIGHT
 
 # InteractableSlide Component Checklist
 
