@@ -23,10 +23,12 @@ export function connect() {
         console.log('Current <InteractableSlide> State:', data)
     })
     
-    emitter.on('point', async (i: Instruction) => {
-        await pointTo(i.payload.elementId) // emitter not waiting until tutor is done
-        emitter.emit('tutor-done') 
+    emitter.on('point', async (event) => {
+        const i = event as Instruction
+        await pointTo(i.payload.elementId)
+        emitter.emit('tutor-done')
     })
+    
     
     emitter.on('tutor-done', () => {
         console.log("tutor-done")
@@ -46,8 +48,8 @@ export function connect() {
       }, 1000);
     };
   
-    ws.onerror = function(err) {
-      console.error('Socket encountered error: ', err.message, 'Closing socket');
+    ws.onerror = function(err: Event) {
+      console.error('Socket encountered error: ', err, 'Closing socket');
       ws.close();
     };
   }

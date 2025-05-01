@@ -33,8 +33,6 @@ function connect() {
                 console.log('sending next instruction to client: ', script[index])
                 ws.send(JSON.stringify(script[index]))
                 index += 1
-            } else {
-                console.log("script has completed")
             }
         })
         

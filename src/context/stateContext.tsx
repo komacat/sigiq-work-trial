@@ -4,7 +4,7 @@ import { createContext, useEffect, useState } from 'react'
 
 export const stateContext = createContext<StateContext>({
     state: 'client',
-    setState: (arg0: 'client' | 'server' | 'inactive') => {},
+    setState: (arg0: string) => {},
 })
 
 export function StateContextProvider({ children }: { children: React.ReactNode }) {
