@@ -1,12 +1,12 @@
 'use client'
-import { useEffect,useState, useContext } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { Start } from './Start'
 import emitter from '@/utils/emitter'
 import { stateContext } from '@/context/stateContext'
 
 function Navigation() {
     const context = useContext(stateContext)
-    
+
     const [sessionActive, setSessionActive] = useState(false)
     const [isSpeaking, setIsSpeaking] = useState(false)
 
@@ -14,24 +14,23 @@ function Navigation() {
     const [spaceUp, setSpaceUp] = useState(false)
 
     function downHandler(event: KeyboardEvent) {
-        console.log(context.state)
-        if (event.code === 'Space') {
-            console.log("spacedown")
+        if (event.code === 'Space' && context.state === 'client') {
+            console.log('spacedown')
             setSpaceDown(true)
         }
     }
 
     function upHandler(event: KeyboardEvent) {
-        if (event.code === 'Space' && context.state === "client") {
-            console.log("spaceup")
+        if (event.code === 'Space' && context.state === 'client') {
+            console.log('spaceup')
             setSpaceUp(true)
         }
     }
 
     function monitorSpeech() {
-        console.log("monitorspeech: ", context.state, sessionActive)
-        if (sessionActive && context.state === "client") {
-            console.log("Test")
+        console.log('monitorspeech: ', context.state, sessionActive)
+        if (sessionActive && context.state === 'client') {
+            console.log('Test')
             if (spaceDown === true && spaceUp === false) {
                 setIsSpeaking(true)
             } else if (spaceUp === true) {
@@ -40,9 +39,6 @@ function Navigation() {
                 setSpaceUp(false)
                 emitter.emit('client-done')
             }
-        } else {
-            setSpaceDown(false)
-            setSpaceUp(false)
         }
     }
 

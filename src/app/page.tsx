@@ -1,6 +1,5 @@
 import InteractableSlide from '@/components/InteractableSlide'
 import Navigation from '@/components/Navigation'
-import Websocket from '@/components/Websocket'
 import StateContextProvider from '@/context/stateContext'
 import ThemeContextProvider from '@/context/themeContext'
 
@@ -24,7 +23,9 @@ export default function Home() {
                             odit qui modi aspernatur non fugit aliquid qui repellat voluptatem. Quo
                             magni iusto est galisum dolor qui deserunt voluptatem ut laudantium
                             dolor cum enim quam et earum facere. Est quasi veniam et consequatur
-                            blanditiis in tempora perspiciatis aut ullam aliquam. Rem earum
+                        </p>
+                        <p id="secondary-text" data-role="interactable" data-type="text">
+                        blanditiis in tempora perspiciatis aut ullam aliquam. Rem earum
                             consequatur ad tenetur voluptatibus est atque debitis? Et cumque vero ea
                             nobis impedit est reiciendis omnis. Eos laudantium vero et laboriosam
                             quisquam ea animi facilis a dolores deleniti qui enim iusto est quia
@@ -36,7 +37,6 @@ export default function Home() {
                         </p>
                     </div>
                 </InteractableSlide>
-                <Websocket />
                 <Navigation />
             </main>
         </StateContextProvider>

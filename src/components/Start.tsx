@@ -1,15 +1,22 @@
-"use client"
-import emitter from "@/utils/emitter"
+'use client'
+import emitter from '@/utils/emitter'
+import connect from '@/utils/websocket'
 
-export function Start({ sessionActive, setSessionActive }: {sessionActive: boolean, setSessionActive: (arg0: boolean) => void}) {
+export function Start({
+    sessionActive,
+    setSessionActive,
+}: {
+    sessionActive: boolean
+    setSessionActive: (arg0: boolean) => void
+}) {
     function handleStart() {
         if (!sessionActive) {
-        console.log('client-done')
-        emitter.emit('client-done')
-        setSessionActive(true)
-
+            console.log('client-done')
+            emitter.emit('client-done')
+            setSessionActive(true)
+            connect()
         } else {
-            console.log("session active")
+            console.log('session active')
         }
     }
     if (!sessionActive) {
@@ -19,10 +26,6 @@ export function Start({ sessionActive, setSessionActive }: {sessionActive: boole
             </button>
         )
     } else {
-        return (
-            <button className="m-4 bg-gray-200 p-4">
-                session in progress
-            </button>
-        )
+        return <button className="m-4 bg-gray-200 p-4">session in progress</button>
     }
 }

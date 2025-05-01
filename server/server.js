@@ -16,26 +16,30 @@ const script = [
     {
         interaction: 'point',
         payload: {
-            elementId: 'main-text',
+            elementId: 'secondary-text',
         },
     },
 ]
 
-const index = 0
-
 function connect() {
     wss.on('connection', (ws) => {
+        let index = 0
+        console.log(index)
         console.log('Client connected')
 
         ws.on('message', (message) => {
             console.log(`Server received: ${message}`)
-            if (message.toString() === 'client-done') {
+            if ((message.toString() === 'client-done' || message.toString() === 'client-connected') && index < script.length) {
                 console.log('sending next instruction to client: ', script[index])
                 ws.send(JSON.stringify(script[index]))
+                index += 1
+            } else {
+                console.log("script has completed")
             }
         })
+        
         ws.on('close', () => {
-            console.log('Client disconnected, attempting to reconnnect') // add better reconnection method
+            console.log('Client disconnected') // add better reconnection method
             ws.close()
         })
     })

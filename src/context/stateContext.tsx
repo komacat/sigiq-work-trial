@@ -2,7 +2,10 @@
 import { StateContext } from '@/lib/types'
 import { createContext, useEffect, useState } from 'react'
 
-export const stateContext = createContext<StateContext>({ state: 'client', setState: (arg0: string) => {} })
+export const stateContext = createContext<StateContext>({
+    state: 'client',
+    setState: (arg0: 'client' | 'server' | 'inactive') => {},
+})
 
 export function StateContextProvider({ children }: { children: React.ReactNode }) {
     const [state, setState] = useState('client')

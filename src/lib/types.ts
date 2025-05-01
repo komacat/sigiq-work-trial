@@ -24,6 +24,6 @@ export type ThemeContext = {
 }
 
 export type StateContext = {
-    state: string
-    setState: (arg0: string) => void
+    state: 'client' | 'server' | 'inactive'
+    setState: (arg0: 'client' | 'server' | 'inactive') => void
 }
