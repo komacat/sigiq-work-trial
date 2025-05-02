@@ -28,10 +28,9 @@ function connect() {
                 console.log('sending next instruction to client: ', script[index])
                 ws.send(JSON.stringify(script[index]))
                 index += 1
-
-                if (index >= script.length) {
-                    ws.send(JSON.stringify({ message: 'script-done' })) // i want to wait until the tutor is done with their last action before firing this
-                }
+            }
+            else if (data.message === 'tutor-done' && index >= script.length) {
+                ws.send(JSON.stringify({ message: 'script-done' }))
             }
         })
 

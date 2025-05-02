@@ -1,5 +1,3 @@
-'use client'
-
 function Workspace() {
     return (
         <div id="workspace" className="text- h-full w-full bg-white">
