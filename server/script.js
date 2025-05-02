@@ -1,6 +1,6 @@
-const speech_1 = require('./audio')
+import {speech_1} from './audio.js'
 
-const script = [
+export const scriptData = [
     {
         interaction: 'audio',
         payload: {
@@ -39,7 +39,3 @@ const script = [
         isLast: true,
     },
 ]
-
-module.exports = {
-    script,
-}

@@ -1,13 +1,13 @@
-const express = require('express')
-const http = require('http')
-const WebSocket = require('ws')
+import express from 'express'
+import { createServer } from 'http'
+import { WebSocketServer } from 'ws'
 
 const app = express()
-const server = http.createServer(app)
-const wss = new WebSocket.Server({ server })
+const server = createServer(app)
+const wss = new WebSocketServer({ server })
 
-let script = require('./script')
-script = Object.values(script)[0] // turns into an object when imported :|
+import {scriptData} from './script.js'
+const script = Object.values(scriptData)[0] // turns into an object when imported :|
 
 function connect() {
     wss.on('connection', (ws) => {
