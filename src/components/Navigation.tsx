@@ -9,7 +9,7 @@ function Navigation() {
             <Start />
             <AudioInput />
             <div className="flex flex-row">
-            <NoteButton />
+                <NoteButton />
             </div>
         </div>
     )

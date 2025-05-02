@@ -1,10 +1,10 @@
 module.exports = {
-    content: ["./src/**/*.{html,js,svelte,ts}"],
+    content: ['./src/**/*.{html,js,svelte,ts}'],
     theme: {
-      extend: {
-        fontFamily: {
-          indieflower: ["Indie Flower", "sans-serif"],
+        extend: {
+            fontFamily: {
+                indieflower: ['Indie Flower', 'sans-serif'],
+            },
         },
     },
-},
 }

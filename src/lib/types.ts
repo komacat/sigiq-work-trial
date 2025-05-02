@@ -34,6 +34,6 @@ export type StateContext = {
 }
 
 export type NoteContext = {
-    notes: boolean,
+    notes: boolean
     toggleNotes: () => void
 }

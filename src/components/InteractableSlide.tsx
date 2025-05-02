@@ -27,14 +27,18 @@ function InteractableSlide({ children }: { children: React.ReactNode }) {
         emitter.emit('state', JSON.stringify(result))
     }, [])
     return (
-        <div className='flex flex-row flex-grow w-full max-w-full justify-center iterms-center'>
-        <div ref={container} className="flex rounded-xl m-4 bg-white p-8 w-[80%] justify-center iterms-center">
-            {children}
-        </div>
-        {context.notes && <div className="rounded-xl m-4 w-[30%] bg-white p-8">
-         <Workspace/>
-        </div>
-}
+        <div className="iterms-center flex w-full max-w-full flex-grow flex-row justify-center">
+            <div
+                ref={container}
+                className="iterms-center m-4 flex w-[80%] justify-center rounded-xl bg-white p-8"
+            >
+                {children}
+            </div>
+            {context.notes && (
+                <div className="m-4 w-[30%] rounded-xl bg-white p-8">
+                    <Workspace />
+                </div>
+            )}
         </div>
     )
 }

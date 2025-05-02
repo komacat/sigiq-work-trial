@@ -2,7 +2,7 @@
 
 function Workspace() {
     return (
-        <div id="workspace" className="w-full h-full bg-white text-">
+        <div id="workspace" className="text- h-full w-full bg-white">
             The tutor can write notes here.
         </div>
     )

@@ -17,7 +17,8 @@ export function Start() {
     }
     if (context.state === 'inactive') {
         return (
-            <button id="btnStart"
+            <button
+                id="btnStart"
                 className="rounded-3xl border-2 border-solid border-gray-400 p-4"
                 onClick={handleStart}
             >

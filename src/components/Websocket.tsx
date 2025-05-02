@@ -31,7 +31,7 @@ export function Websocket() {
             console.log('event: ', message.data)
             const data = JSON.parse(message.data)
             if (data.message === 'script-done') {
-                console.log("setting state to inactive")
+                console.log('setting state to inactive')
                 context.setState('inactive')
             }
             switch (data.interaction) {
