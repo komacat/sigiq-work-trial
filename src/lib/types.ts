@@ -6,11 +6,14 @@ export type InteractableElement = {
     actions: string[]
 }
 
-export type Instruction = {
-    interaction: 'point' | 'highlight'
+export type Interaction = {
+    interaction: 'point' | 'highlight' | 'speech' | 'audio'
     payload: {
-        elementId: string
+        elementId?: string | null
+        chunk?: string | null
+        highlight?: string | null
     }
+    isLast: boolean
 }
 
 export type Point = {

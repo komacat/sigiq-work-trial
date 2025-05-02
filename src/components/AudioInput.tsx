@@ -2,14 +2,15 @@
 
 import { stateContext } from '@/context/stateContext'
 import { useContext, useEffect, useRef, useState } from 'react'
-import type { StateContext } from '@/lib/types'
+import type { Interaction, StateContext } from '@/lib/types'
 import emitter from '@/utils/emitter'
+import { audioToBase64 } from '@/utils/encode'
 
-function AudioInput({sessionActive} : { sessionActive: boolean}) {
+function AudioInput({ sessionActive }: { sessionActive: boolean }) {
     const context: StateContext = useContext(stateContext)
 
     const [isRecording, setIsRecording] = useState<boolean>(false)
-    const [recordedUrl, setRecordedUrl] = useState<string | null>(null)
+    const [recordedUrl, setRecordedUrl] = useState<string>('')
     const mediaStream = useRef<MediaStream>(null)
     const mediaRecorder = useRef<MediaRecorder>(null)
     const chunks = useRef<Blob[]>([])
@@ -18,12 +19,14 @@ function AudioInput({sessionActive} : { sessionActive: boolean}) {
     const [spaceUp, setSpaceUp] = useState(false)
 
     function downHandler(event: KeyboardEvent) {
+        console.log("down ", context.state)
         if (event.code === 'Space' && context.state === 'client') {
             setSpaceDown(true)
         }
     }
 
     function upHandler(event: KeyboardEvent) {
+        console.log("up ", context.state)
         if (event.code === 'Space' && context.state === 'client') {
             setSpaceUp(true)
         }
@@ -44,30 +47,35 @@ function AudioInput({sessionActive} : { sessionActive: boolean}) {
 
     async function startRecording() {
         try {
-            const stream = await navigator.mediaDevices.getUserMedia({audio: true})
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
             mediaStream.current = stream
             mediaRecorder.current = new MediaRecorder(stream)
-
-            console.log("media recorder ", mediaRecorder.current)
-            console.log("mediaStream", mediaStream.current)
 
             mediaRecorder.current.ondataavailable = (e: BlobEvent) => {
                 if (e.data.size > 0) {
                     chunks.current.push(e.data)
-                    console.log("chunk pushed")
                 }
             }
             mediaRecorder.current.onstop = () => {
-                const recordedBlob = new Blob(chunks.current, {type: 'audio/webm'})
-                console.log("chunks", chunks)
-                console.log("recorded blob", recordedBlob)
+                const recordedBlob = new Blob(chunks.current, { type: 'audio/webm' })
                 const url = URL.createObjectURL(recordedBlob)
                 setRecordedUrl(url)
-                console.log("recorded url: ", recordedUrl)
+                console.log('recorded url: ', recordedUrl)
+                audioToBase64(recordedUrl).then((base64Audio) => {
+                    console.log(base64Audio)
+                    const data: Interaction = {
+                        interaction: 'speech',
+                        payload: {
+                            chunk: base64Audio as string, // uhhh
+                        },
+                        isLast: true // client can only send 1 response
+                    }
+                    emitter.emit('speech', data)
+                })
                 chunks.current = []
             }
-            mediaRecorder.current.start();
-        }catch (err) {
+            mediaRecorder.current.start()
+        } catch (err) {
             console.error(`Error using microphone: ${err}`)
         }
     }
@@ -76,10 +84,9 @@ function AudioInput({sessionActive} : { sessionActive: boolean}) {
         if (mediaRecorder.current && mediaRecorder.current.state === 'recording') {
             mediaRecorder.current.stop()
         }
-
     }
 
-    useEffect(() =>{
+    useEffect(() => {
         if (isRecording) {
             startRecording()
         } else {
@@ -97,16 +104,18 @@ function AudioInput({sessionActive} : { sessionActive: boolean}) {
         }
     }, [])
 
-
     useEffect(() => {
         monitorSpeech()
     }, [spaceDown, spaceUp])
 
     return (
         <>
-        <button id="btnMic"className={isRecording ? 'm-4 bg-red-300 p-4' : 'm-4 bg-red-200 p-4'}>
-            press space to speak
-        </button>
+            <button
+                id="btnMic"
+                className={isRecording ? 'm-4 bg-red-300 p-4' : 'm-4 bg-red-200 p-4'}
+            >
+                press space to speak
+            </button>
         </>
     )
 }

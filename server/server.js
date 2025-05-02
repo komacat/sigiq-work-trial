@@ -8,34 +8,61 @@ const wss = new WebSocket.Server({ server })
 
 const script = [
     {
-        interaction: 'point',
+        interaction: 'audio',
         payload: {
-            elementId: 'main-text',
+            chunk: 'hi',
+            transcription: "This is an example transcription for the tutor's voice message",
         },
+        isLast: true,
     },
     {
         interaction: 'point',
         payload: {
-            elementId: 'secondary-text',
+            elementId: 'circle',
         },
+        isLast: true,
+    },
+    {
+        interaction: 'point',
+        payload: {
+            elementId: 'main-question',
+        },
+        isLast: true,
+    },
+    {
+        interaction: 'point',
+        payload: {
+            elementId: 'sub-question-1',
+        },
+        isLast: false,
+    },
+    {
+        interaction: 'point',
+        payload: {
+            elementId: 'sub-question-2',
+        },
+        isLast: true,
     },
 ]
 
 function connect() {
     wss.on('connection', (ws) => {
         let index = 0
-        console.log(index)
         console.log('Client connected')
 
-        ws.on('message', (message) => {
-            console.log(`Server received: ${message}`)
-            if ((message.toString() === 'client-done' || message.toString() === 'client-connected') && index < script.length) {
+        ws.on('message', (event) => {
+            const data = JSON.parse(event)
+            console.log(`Server received: ${data.message}`)
+            if (
+                (data.message === 'next-instruction' || data.message === 'client-done') &&
+                index < script.length
+            ) {
                 console.log('sending next instruction to client: ', script[index])
                 ws.send(JSON.stringify(script[index]))
                 index += 1
             }
         })
-        
+
         ws.on('close', () => {
             console.log('Client disconnected') // add better reconnection method
             ws.close()

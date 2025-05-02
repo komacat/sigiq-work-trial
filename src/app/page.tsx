@@ -10,30 +10,50 @@ export default function Home() {
                 <InteractableSlide>
                     <div className="h-full w-full">
                         <h1 className="text-2xl font-bold">slide 1</h1>
-                        <img
-                            id="placeholder-image"
-                            data-role="interactable"
-                            data-type="image"
-                            src="https://placehold.co/600x400"
-                            className="w-full"
-                        />
-                        <p id="main-text" data-role="interactable" data-type="text">
-                            Lorem ipsum dolor sit amet. Et velit corrupti hic maxime omnis ut quos
-                            iure 33 amet ipsam cum consectetur quia. Eos sunt dolore sed aliquid
-                            odit qui modi aspernatur non fugit aliquid qui repellat voluptatem. Quo
-                            magni iusto est galisum dolor qui deserunt voluptatem ut laudantium
-                            dolor cum enim quam et earum facere. Est quasi veniam et consequatur
+                        <svg width="250" height="250" className="m-4 p-4">
+                            <title>Diagram of a circle</title>
+                            <circle
+                                id="circle"
+                                cx="100"
+                                cy="100"
+                                r="100"
+                                stroke="black"
+                                fill="none"
+                                data-role="interactable"
+                                data-type="shape"
+                            />
+                            <line
+                                id="OA"
+                                x1="100"
+                                y1="100"
+                                x2="200"
+                                y2="100"
+                                stroke="red"
+                                strokeWidth="2"
+                                data-role="interactable"
+                                data-type="shape"
+                            />
+                            <line
+                                id="OB"
+                                x1="100"
+                                y1="100"
+                                x2="60"
+                                y2="10"
+                                stroke="red"
+                                strokeWidth="2"
+                                data-role="interactable"
+                                data-type="shape"
+                            />
+                        </svg>
+                        <p id="main-question" data-role="interactable" data-type="text">
+                            Two radii OA and OB form a 60° angle in a circle. The radius length is 5
+                            cm.
                         </p>
-                        <p id="secondary-text" data-role="interactable" data-type="text">
-                        blanditiis in tempora perspiciatis aut ullam aliquam. Rem earum
-                            consequatur ad tenetur voluptatibus est atque debitis? Et cumque vero ea
-                            nobis impedit est reiciendis omnis. Eos laudantium vero et laboriosam
-                            quisquam ea animi facilis a dolores deleniti qui enim iusto est quia
-                            commodi qui debitis voluptatem. Qui explicabo consequuntur qui omnis
-                            numquam aut laboriosam minima et molestiae enim. Nam perspiciatis modi
-                            ad iusto officia et totam dignissimos aut omnis illo vel optio dolore ut
-                            totam libero id culpa vitae. Vel vitae quia non commodi voluptas ut
-                            neque sequi et assumenda doloremque.
+                        <p id="sub-question-1" data-role="interactable" data-type="text">
+                            a) Find the length of arc AB.
+                        </p>
+                        <p id="sub-question-2" data-role="interactable" data-type="text">
+                            b) What fraction of the circle’s circumference does arc AB represent?
                         </p>
                     </div>
                 </InteractableSlide>

@@ -1,9 +1,8 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import type { Instruction, InteractableElement } from '@/lib/types'
+import type { InteractableElement } from '@/lib/types'
 import emitter from '@/utils/emitter'
-import { pointTo } from '@/utils/instructions'
 
 function InteractableSlide({ children }: { children: React.ReactNode }) {
     let container = useRef<HTMLDivElement>(null)
@@ -24,7 +23,7 @@ function InteractableSlide({ children }: { children: React.ReactNode }) {
         emitter.emit('state', JSON.stringify(result))
     }, [])
     return (
-        <div ref={container} className="m-8 h-full bg-white p-8">
+        <div ref={container} className="m-8 h-full flex-grow bg-white p-8">
             {children}
         </div>
     )

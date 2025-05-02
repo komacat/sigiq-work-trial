@@ -32,7 +32,8 @@
         "src/components/WSConsumer.jsx",
         "server/server.js",
         "src/context/themeContext.js",
-        "src/context/themeContext.js"
+        "src/context/themeContext.js",
+        "src/utils/encode.js"
     ],
     "exclude": ["node_modules"]
 }
