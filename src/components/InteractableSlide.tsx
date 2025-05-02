@@ -35,7 +35,7 @@ function InteractableSlide({ children }: { children: React.ReactNode }) {
                 {children}
             </div>
             {context.notes && (
-                <div className="m-4 w-[30%] rounded-xl bg-white p-8">
+                <div className="my-4 mr-4 w-[30%] rounded-xl bg-white p-8">
                     <Workspace />
                 </div>
             )}

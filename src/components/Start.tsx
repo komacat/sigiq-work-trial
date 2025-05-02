@@ -8,27 +8,24 @@ export function Start() {
 
     function handleStart() {
         if (context.state === 'inactive') {
-            console.log('start')
             emitter.emit('start')
             context.setState('tutor')
-        } else {
-            console.log('session active')
         }
     }
     if (context.state === 'inactive') {
         return (
             <button
                 id="btnStart"
-                className="rounded-3xl border-2 border-solid border-gray-400 p-4"
+                className="rounded-3xl border-2 border-solid border-gray-300 p-4"
                 onClick={handleStart}
             >
-                start
+                Start session
             </button>
         )
     } else {
         return (
-            <button className="rounded-3xl border-2 border-solid border-gray-300 bg-gray-300 p-4">
-                session in progress
+            <button className="flex items-center justify-center rounded-3xl border-2 border-solid border-gray-200 bg-gray-200 p-4">
+                Session in progress...
             </button>
         )
     }

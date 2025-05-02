@@ -5,7 +5,7 @@ import NoteButton from './NoteButton'
 
 function Navigation() {
     return (
-        <div className="flex h-24 w-full items-center justify-between bg-gray-200 px-8">
+        <div className="flex h-24 w-full items-center justify-between px-8">
             <Start />
             <AudioInput />
             <div className="flex flex-row">

@@ -11,6 +11,10 @@ export function NoteButton() {
         toggleNotes()
     }
 
-    return <button onClick={handleClick}>notes</button>
+    return (
+        <button onClick={handleClick}>
+            <i className="bi bi-journal-text text-2xl"></i>
+        </button>
+    )
 }
 export default NoteButton

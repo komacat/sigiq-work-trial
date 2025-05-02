@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import './app.css'
+import 'bootstrap-icons/font/bootstrap-icons.css'
 
 export const metadata: Metadata = {
     title: '',

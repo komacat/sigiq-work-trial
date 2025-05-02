@@ -9,7 +9,6 @@ import { audioToBase64 } from '@/utils/encode'
 function AudioInput() {
     const context: StateContext = useContext(stateContext)
     const contextRef = useRef(context)
-    console.log('context: ', context, context.state)
 
     const [isRecording, setIsRecording] = useState<boolean>(false)
     const mediaStream = useRef<MediaStream>(null)
@@ -20,15 +19,12 @@ function AudioInput() {
     const [spaceUp, setSpaceUp] = useState(false)
 
     function downHandler(event: KeyboardEvent) {
-        console.log('hi', contextRef.current.state, spaceDown, spaceUp)
-        console.log('down ', contextRef.current.state)
         if (event.code === 'Space' && contextRef.current.state === 'client') {
             setSpaceDown(true)
         }
     }
 
     function upHandler(event: KeyboardEvent) {
-        console.log('up ', contextRef.current.state)
         if (event.code === 'Space' && contextRef.current.state === 'client') {
             setSpaceUp(true)
             setSpaceDown
@@ -36,7 +32,6 @@ function AudioInput() {
     }
 
     function monitorSpeech() {
-        console.log('hi monitor', contextRef.current.state, spaceDown, spaceUp)
         if (contextRef.current.state === 'client') {
             if (spaceDown === true && spaceUp === false) {
                 setIsRecording(true)
@@ -45,7 +40,6 @@ function AudioInput() {
                 setSpaceDown(false)
                 setSpaceUp(false)
                 emitter.emit('client-done')
-                console.log('contextttt', contextRef.current.state)
             }
         }
     }
@@ -56,21 +50,15 @@ function AudioInput() {
             mediaStream.current = stream
             mediaRecorder.current = new MediaRecorder(stream)
 
-            console.log(mediaStream.current)
-            console.log(mediaRecorder.current)
-
             mediaRecorder.current.ondataavailable = (e: BlobEvent) => {
                 if (e.data.size > 0) {
                     chunks.current.push(e.data)
                 }
             }
             mediaRecorder.current.onstop = () => {
-                console.log(chunks.current)
                 const recordedBlob = new Blob(chunks.current, { type: 'audio/webm' })
                 const url = URL.createObjectURL(recordedBlob)
-                console.log(url)
                 audioToBase64(url).then((base64Audio) => {
-                    console.log(base64Audio)
                     const data: Interaction = {
                         interaction: 'speech',
                         payload: {
@@ -123,16 +111,34 @@ function AudioInput() {
 
     return (
         <>
-            <button
-                id="btnMic"
-                className={
-                    isRecording
-                        ? 'rounded-3xl border-2 border-solid border-gray-400 bg-gray-400 p-4'
-                        : 'rounded-3xl border-2 border-solid border-gray-400 bg-gray-200 p-4'
-                }
-            >
-                press space to speak
-            </button>
+            {context.state === 'inactive' || context.state === 'tutor' ? (
+                <div className="flex flex-col items-center">
+                    <button
+                        id="btnMic"
+                        className="text-gray-400 flex items-center justify-center rounded-3xl border-2 border-solid border-gray-300 bg-gray-100 p-4"
+                    >
+                        <i className="bi bi-mic-mute mr-2 h-full"></i> Push [Spacebar] to talk
+                    </button>
+                </div>
+            ) : isRecording ? (
+                <div className="flex flex-col items-center">
+                    <button
+                        id="btnMic"
+                        className="rounded-3xl border-2 border-solid border-gray-300 bg-gray-300 p-4"
+                    >
+                        <i className="bi bi-mic-fill h-full"></i> Release [Spacebar] to stop
+                    </button>
+                </div>
+            ) : (
+                <div className="flex flex-col items-center">
+                    <button
+                        id="btnMic"
+                        className="flex items-center justify-center rounded-3xl border-2 border-solid border-gray-400 bg-gray-100 p-4"
+                    >
+                        <i className="bi bi-mic-mute mr-2 h-full"></i> Push [Spacebar] to talk
+                    </button>
+                </div>
+            )}
         </>
     )
 }
