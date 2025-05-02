@@ -1,6 +1,7 @@
 import { Point } from '@/lib/types'
 
 export async function pointTo(elementId: string) {
+    // small break inbetween this event to simulate tutor thinking
     await new Promise((r) => setTimeout(r, 1000))
 
     const element = document.getElementById(elementId)
@@ -76,7 +77,6 @@ export async function playAudio(base64String: string, mimeType: string) {
         })
 
         audio.play()
-        await new Promise((r) => setTimeout(r, 1000))
     })
 }
 
@@ -85,6 +85,25 @@ export async function highlight(text: string, elementId: string) {
     if (!element) {
         throw new Error('Element not found')
     }
+    let elementHTML = element.innerHTML
     const elementText = element.textContent
     console.log(elementText)
+
+    if (!elementText) {
+        throw new Error('No text to highlight in element')
+    }
+
+    const start = elementText.indexOf(text)
+    const end = start + text.length
+
+    // this approach doesn't really work in react....
+
+    elementHTML = elementHTML.substring(0, start) +
+        '<span className="bg-gray-200">' + 
+        elementHTML.substring(start, end - start + 1) +
+        '</span>' +
+        elementHTML.substring(end + 1);
+    element.innerHTML = elementHTML;
+    console.log("new element html: ", elementHTML)
+
 }

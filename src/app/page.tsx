@@ -19,7 +19,7 @@ export default function Home() {
                 <NoteContextProvider>
                     <InteractableSlide>
                         <div>
-                            <h1 className="text-2xl font-bold">Problem 1</h1>
+                            <h1 className="text-4xl font-bold">Problem 1</h1>
                             <svg id="diagramCanvas" width="250" height="250" className="m-4 p-4">
                                 <title>Diagram of a circle</title>
                                 <circle
@@ -59,16 +59,16 @@ export default function Home() {
                                 id="problemText"
                                 data-role="interactable"
                                 data-type="text"
-                                className="p-2 text-xl"
+                                className="p-2 text-2xl"
                             >
                                 Two radii OA and OB form a 60° angle in a circle. The radius length
                                 is 5 cm.
                             </p>
                             <ol type="a" className="pl-4">
-                                <li id="subQuestion1" data-role="interactable" data-type="text" className="text-xl">
+                                <li id="subQuestion1" data-role="interactable" data-type="text" className="text-2xl">
                                     a) Find the length of arc AB.
                                 </li>
-                                <li id="subQuestion2" data-role="interactable" data-type="text" className="text-xl">
+                                <li id="subQuestion2" data-role="interactable" data-type="text" className="text-2xl">
                                     b) What fraction of the circle’s circumference does arc AB
                                     represent?
                                 </li>

@@ -2,15 +2,13 @@
 
 import { Interaction, StateContext } from '@/lib/types'
 import emitter from '../utils/emitter'
-import { playAudio, pointTo } from '../utils/instructions'
-import { useContext, useEffect, useRef, useState } from 'react'
+import { highlight, playAudio, pointTo } from '../utils/instructions'
+import { useContext, useEffect, useRef } from 'react'
 
 import { stateContext } from '@/context/stateContext'
 
 export function Websocket() {
     const context: StateContext = useContext(stateContext)
-
-    const [connected, setConnected] = useState(false)
     const reconnectAttemptsRef = useRef(0)
     const socketRef = useRef<WebSocket | null>(null)
 
@@ -22,7 +20,6 @@ export function Websocket() {
 
         ws.onopen = function () {
             console.log('Client connected')
-            setConnected(true)
             reconnectAttemptsRef.current = 0
             ws.send(JSON.stringify({ message: 'next-instruction' }))
         }
@@ -41,12 +38,14 @@ export function Websocket() {
                 case 'audio':
                     emitter.emit('audio', data)
                     break
+                case 'highlight':
+                    emitter.emit('highlight', data)
+                    break
             }
         }
 
         ws.onclose = function (e) {
             console.log('Socket is closed. Reconnect will be attempted in 1 second.', e.reason)
-            setConnected(false)
             scheduleReconnect()
         }
 
@@ -82,10 +81,6 @@ export function Websocket() {
             }
         })
 
-        emitter.on('speech', (data) => {
-            socketRef.current?.send(JSON.stringify({ message: 'client-response', data: data }))
-        })
-
         emitter.on('audio', async (event) => {
             const i = event as Interaction
             console.log('audio emitter')
@@ -99,6 +94,22 @@ export function Websocket() {
             } else {
                 emitter.emit('tutor-done')
             }
+        })
+
+        emitter.on('highlight', async (event) => {
+            const i = event as Interaction
+            if (i.payload.elementId && i.payload.highlight) {
+                await highlight(i.payload.highlight, i.payload.elementId)
+            }
+            if (i.isLast === false) {
+                socketRef.current?.send(JSON.stringify({ message: 'next-instruction' }))
+            } else {
+                emitter.emit('tutor-done')
+            }
+        })
+
+        emitter.on('speech', (data) => {
+            socketRef.current?.send(JSON.stringify({ message: 'client-response', data: data }))
         })
 
         // emitters to track state
