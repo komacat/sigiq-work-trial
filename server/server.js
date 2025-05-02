@@ -23,8 +23,7 @@ function connect() {
                 console.log('sending next instruction to client: ', script[index])
                 ws.send(JSON.stringify(script[index]))
                 index += 1
-            }
-            else if (data.message === 'tutor-done' && index >= script.length) {
+            } else if (data.message === 'tutor-done' && index >= script.length) {
                 ws.send(JSON.stringify({ message: 'script-done' }))
             }
         })

@@ -1,6 +1,6 @@
 'use client'
 
-import { useContext, useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef } from 'react'
 import type { InteractableElement } from '@/lib/types'
 import emitter from '@/utils/emitter'
 import Workspace from './Workspace'
@@ -8,8 +8,8 @@ import { notesContext } from '@/context/notesContext'
 
 function InteractableSlide({ children }: { children: React.ReactNode }) {
     const context = useContext(notesContext)
+    const container = useRef<HTMLDivElement>(null)
 
-    let container = useRef<HTMLDivElement>(null)
     useEffect(() => {
         const result: InteractableElement[] = []
         const interactableElements = document.querySelectorAll('[data-role="interactable"]')
@@ -30,12 +30,12 @@ function InteractableSlide({ children }: { children: React.ReactNode }) {
         <div className="iterms-center flex w-full max-w-full flex-grow flex-row justify-center">
             <div
                 ref={container}
-                className="iterms-center m-4 flex w-[80%] justify-center rounded-xl bg-white p-8"
+                className="iterms-center m-4 flex w-[80%] justify-center rounded-xl bg-white p-8 dark:bg-slate-800"
             >
                 {children}
             </div>
             {context.notes && (
-                <div className="my-4 mr-4 w-[30%] rounded-xl bg-white p-8">
+                <div className="my-4 mr-4 w-[30%] rounded-xl bg-white p-8 dark:bg-slate-800">
                     <Workspace />
                 </div>
             )}

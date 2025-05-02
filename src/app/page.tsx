@@ -1,16 +1,21 @@
+'use client'
 import InteractableSlide from '@/components/InteractableSlide'
 import Navigation from '@/components/Navigation'
-import StateContextProvider, { stateContext } from '@/context/stateContext'
+import StateContextProvider from '@/context/stateContext'
 import Websocket from '@/components/Websocket'
 import NoteContextProvider from '@/context/notesContext'
-import ThemeContextProvider from '@/context/themeContext'
+import { themeContext } from '@/context/themeContext'
+import { useContext } from 'react'
 
 export default function Home() {
+    const { theme } = useContext(themeContext)
     return (
-        <ThemeContextProvider>
         <StateContextProvider>
             <Websocket />
-            <main className="flex h-full w-full flex-col items-center justify-center bg-gray-100">
+            <main
+                data-theme={theme}
+                className="flex h-full w-full flex-col items-center justify-center bg-gray-100 dark:bg-slate-900 dark:text-white"
+            >
                 <NoteContextProvider>
                     <InteractableSlide>
                         <div>
@@ -22,7 +27,7 @@ export default function Home() {
                                     cx="100"
                                     cy="100"
                                     r="100"
-                                    stroke="black"
+                                    stroke="gray"
                                     fill="none"
                                     data-role="interactable"
                                     data-type="shape"
@@ -33,7 +38,7 @@ export default function Home() {
                                     y1="100"
                                     x2="200"
                                     y2="100"
-                                    stroke="red"
+                                    stroke="pink"
                                     strokeWidth="2"
                                     data-role="interactable"
                                     data-type="shape"
@@ -44,7 +49,7 @@ export default function Home() {
                                     y1="100"
                                     x2="60"
                                     y2="10"
-                                    stroke="red"
+                                    stroke="pink"
                                     strokeWidth="2"
                                     data-role="interactable"
                                     data-type="shape"
@@ -74,6 +79,5 @@ export default function Home() {
                 </NoteContextProvider>
             </main>
         </StateContextProvider>
-        </ThemeContextProvider>
     )
 }

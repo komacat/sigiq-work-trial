@@ -24,7 +24,7 @@ export function Start() {
         )
     } else {
         return (
-            <button className="flex items-center justify-center rounded-3xl border-2 border-solid border-gray-200 bg-gray-200 p-4">
+            <button className="flex items-center justify-center rounded-3xl border-2 border-solid border-gray-200 bg-gray-200 p-4 dark:border-slate-800 dark:bg-slate-800">
                 Session in progress...
             </button>
         )

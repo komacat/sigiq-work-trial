@@ -13,7 +13,7 @@ export function NoteButton() {
 
     return (
         <button onClick={handleClick}>
-            <i className="px-2 bi bi-journal-text text-2xl"></i>
+            <i className="bi bi-journal-text px-2 text-2xl"></i>
         </button>
     )
 }

@@ -11,7 +11,7 @@ function Navigation() {
             <AudioInput />
             <div className="flex flex-row">
                 <NoteButton />
-                <ThemeButton/>
+                <ThemeButton />
             </div>
         </div>
     )

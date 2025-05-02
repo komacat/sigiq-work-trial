@@ -27,7 +27,6 @@ function AudioInput() {
     function upHandler(event: KeyboardEvent) {
         if (event.code === 'Space' && contextRef.current.state === 'client') {
             setSpaceUp(true)
-            setSpaceDown
         }
     }
 
@@ -115,7 +114,7 @@ function AudioInput() {
                 <div className="flex flex-col items-center">
                     <button
                         id="btnMic"
-                        className="flex items-center justify-center rounded-3xl border-2 border-solid border-gray-300 bg-gray-100 p-4 text-gray-400"
+                        className="flex items-center justify-center rounded-3xl border-2 border-solid border-gray-300 bg-gray-100 p-4 text-gray-400 dark:border-gray-500 dark:bg-gray-700"
                     >
                         <i className="bi bi-mic-mute mr-2 h-full"></i> Push [Spacebar] to talk
                     </button>
@@ -124,7 +123,7 @@ function AudioInput() {
                 <div className="flex flex-col items-center">
                     <button
                         id="btnMic"
-                        className="rounded-3xl border-2 border-solid border-gray-300 bg-gray-300 p-4"
+                        className="rounded-3xl border-2 border-solid border-gray-300 bg-gray-300 p-4 dark:border-gray-500 dark:bg-gray-500"
                     >
                         <i className="bi bi-mic-fill h-full"></i> Release [Spacebar] to stop
                     </button>
@@ -133,7 +132,7 @@ function AudioInput() {
                 <div className="flex flex-col items-center">
                     <button
                         id="btnMic"
-                        className="flex items-center justify-center rounded-3xl border-2 border-solid border-gray-400 bg-gray-100 p-4"
+                        className="flex items-center justify-center rounded-3xl border-2 border-solid border-gray-400 bg-gray-100 p-4 dark:border-gray-500 dark:bg-gray-500"
                     >
                         <i className="bi bi-mic-mute mr-2 h-full"></i> Push [Spacebar] to talk
                     </button>
