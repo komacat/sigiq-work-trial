@@ -63,6 +63,6 @@ async function moveTo(element: HTMLElement, src: Point, dst: Point) {
 }
 
 // audio is encoded in base64
-export function playAudio(audio: string) {
+export async function playAudio(audio: string) {
     console.log('playing :')
 }

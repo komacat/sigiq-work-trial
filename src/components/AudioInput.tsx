@@ -112,7 +112,7 @@ function AudioInput({ sessionActive }: { sessionActive: boolean }) {
         <>
             <button
                 id="btnMic"
-                className={isRecording ? 'm-4 bg-red-300 p-4' : 'm-4 bg-red-200 p-4'}
+                className={isRecording ? 'border-gray-400 border-solid border-2 bg-gray-400 rounded-3xl p-4' : 'border-gray-400 border-solid border-2 bg-gray-200 rounded-3xl p-4'}
             >
                 press space to speak
             </button>

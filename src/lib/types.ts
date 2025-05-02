@@ -12,6 +12,7 @@ export type Interaction = {
         elementId?: string | null
         chunk?: string | null
         highlight?: string | null
+        transcription?: string | null
     }
     isLast: boolean
 }

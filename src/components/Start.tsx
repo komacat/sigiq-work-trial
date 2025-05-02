@@ -11,8 +11,8 @@ export function Start({
 }) {
     function handleStart() {
         if (!sessionActive) {
-            console.log('client-done')
-            emitter.emit('client-done')
+            console.log('next-instruction')
+            emitter.emit('next-instruction')
             setSessionActive(true)
             connect()
         } else {
@@ -21,11 +21,11 @@ export function Start({
     }
     if (!sessionActive) {
         return (
-            <button className="m-4 bg-green-200 p-4" onClick={handleStart}>
+            <button className="border-gray-400 border-solid border-2 rounded-3xl p-4" onClick={handleStart}>
                 start
             </button>
         )
     } else {
-        return <button className="m-4 bg-gray-200 p-4">session in progress</button>
+        return <button className="border-gray-300 border-solid border-2 bg-gray-300 rounded-3xl p-4">session in progress</button>
     }
 }

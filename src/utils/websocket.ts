@@ -8,9 +8,9 @@ export function connect() {
         ws.send(JSON.stringify({message: 'next-instruction'}))
     }
 
-    ws.onmessage = (event) => {
-        console.log('event: ', event.data)
-        const data = JSON.parse(event.data)
+    ws.onmessage = (message) => {
+        console.log('event: ', message.data)
+        const data = JSON.parse(message.data)
         if (data.interaction === 'point') {
             emitter.emit('point', data)
         }

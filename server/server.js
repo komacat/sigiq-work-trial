@@ -6,53 +6,23 @@ const app = express()
 const server = http.createServer(app)
 const wss = new WebSocket.Server({ server })
 
-const script = [
-    {
-        interaction: 'audio',
-        payload: {
-            chunk: 'hi',
-            transcription: "This is an example transcription for the tutor's voice message",
-        },
-        isLast: true,
-    },
-    {
-        interaction: 'point',
-        payload: {
-            elementId: 'circle',
-        },
-        isLast: true,
-    },
-    {
-        interaction: 'point',
-        payload: {
-            elementId: 'main-question',
-        },
-        isLast: true,
-    },
-    {
-        interaction: 'point',
-        payload: {
-            elementId: 'sub-question-1',
-        },
-        isLast: false,
-    },
-    {
-        interaction: 'point',
-        payload: {
-            elementId: 'sub-question-2',
-        },
-        isLast: true,
-    },
-]
+let script = require('./script')
+script = Object.values(script)[0] // turns into an object when imported :|
+
 
 function connect() {
     wss.on('connection', (ws) => {
         let index = 0
-        console.log('Client connected')
+        console.log(index)
+        console.log(script)
 
         ws.on('message', (event) => {
             const data = JSON.parse(event)
             console.log(`Server received: ${data.message}`)
+            console.log((data.message === 'next-instruction' || data.message === 'client-done') &&
+            index < script.length)
+            console.log(script)
+            console.log(script.length)
             if (
                 (data.message === 'next-instruction' || data.message === 'client-done') &&
                 index < script.length
