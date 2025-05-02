@@ -2,6 +2,7 @@
 import Start from './Start'
 import AudioInput from './AudioInput'
 import NoteButton from './NoteButton'
+import ThemeButton from './ThemeButton'
 
 function Navigation() {
     return (
@@ -10,6 +11,7 @@ function Navigation() {
             <AudioInput />
             <div className="flex flex-row">
                 <NoteButton />
+                <ThemeButton/>
             </div>
         </div>
     )

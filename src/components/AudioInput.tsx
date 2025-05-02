@@ -115,7 +115,7 @@ function AudioInput() {
                 <div className="flex flex-col items-center">
                     <button
                         id="btnMic"
-                        className="text-gray-400 flex items-center justify-center rounded-3xl border-2 border-solid border-gray-300 bg-gray-100 p-4"
+                        className="flex items-center justify-center rounded-3xl border-2 border-solid border-gray-300 bg-gray-100 p-4 text-gray-400"
                     >
                         <i className="bi bi-mic-mute mr-2 h-full"></i> Push [Spacebar] to talk
                     </button>

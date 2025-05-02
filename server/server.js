@@ -12,15 +12,10 @@ script = Object.values(script)[0] // turns into an object when imported :|
 function connect() {
     wss.on('connection', (ws) => {
         let index = 0
-        console.log('index')
 
         ws.on('message', (event) => {
             const data = JSON.parse(event)
             console.log(`Server received: ${data.message}`)
-            console.log(
-                (data.message === 'next-instruction' || data.message === 'client-done') &&
-                    index < script.length
-            )
             if (
                 (data.message === 'next-instruction' || data.message === 'client-done') &&
                 index < script.length
@@ -28,7 +23,8 @@ function connect() {
                 console.log('sending next instruction to client: ', script[index])
                 ws.send(JSON.stringify(script[index]))
                 index += 1
-            } else if (data.message === 'tutor-done' && index >= script.length) {
+            }
+            else if (data.message === 'tutor-done' && index >= script.length) {
                 ws.send(JSON.stringify({ message: 'script-done' }))
             }
         })

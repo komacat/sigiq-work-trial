@@ -3,9 +3,11 @@ import Navigation from '@/components/Navigation'
 import StateContextProvider, { stateContext } from '@/context/stateContext'
 import Websocket from '@/components/Websocket'
 import NoteContextProvider from '@/context/notesContext'
+import ThemeContextProvider from '@/context/themeContext'
 
 export default function Home() {
     return (
+        <ThemeContextProvider>
         <StateContextProvider>
             <Websocket />
             <main className="flex h-full w-full flex-col items-center justify-center bg-gray-100">
@@ -72,5 +74,6 @@ export default function Home() {
                 </NoteContextProvider>
             </main>
         </StateContextProvider>
+        </ThemeContextProvider>
     )
 }
