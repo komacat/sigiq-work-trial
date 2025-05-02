@@ -12,7 +12,7 @@ script = Object.values(script)[0] // turns into an object when imported :|
 function connect() {
     wss.on('connection', (ws) => {
         let index = 0
-        console.log("index")
+        console.log('index')
 
         ws.on('message', (event) => {
             const data = JSON.parse(event)
@@ -30,8 +30,7 @@ function connect() {
                 index += 1
 
                 if (index >= script.length) {
-                    console.log("script has completed")
-                    ws.send(JSON.stringify({ message: 'script-done' }))
+                    ws.send(JSON.stringify({ message: 'script-done' })) // i want to wait until the tutor is done with their last action before firing this
                 }
             }
         })

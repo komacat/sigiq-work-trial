@@ -10,12 +10,6 @@ export const stateContext = createContext<StateContext>({
 export function StateContextProvider({ children }: { children: React.ReactNode }) {
     const [state, setState] = useState('inactive')
 
-    useEffect(() => {
-        // localStorage.setItem('state','inactive')
-        // const savedState = localStorage.getItem('state') || 'inactive'
-        // setState(savedState)
-    }, [])
-
     return <stateContext.Provider value={{ state, setState }}>{children}</stateContext.Provider>
 }
 export default StateContextProvider

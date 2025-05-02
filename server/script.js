@@ -20,21 +20,21 @@ const script = [
     {
         interaction: 'point',
         payload: {
-            elementId: 'main-question',
+            elementId: 'problemText',
         },
         isLast: true,
     },
     {
         interaction: 'point',
         payload: {
-            elementId: 'sub-question-1',
+            elementId: 'subQuestion1',
         },
         isLast: false,
     },
     {
         interaction: 'point',
         payload: {
-            elementId: 'sub-question-2',
+            elementId: 'subQuestion2',
         },
         isLast: true,
     },

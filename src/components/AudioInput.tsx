@@ -8,8 +8,8 @@ import { audioToBase64 } from '@/utils/encode'
 
 function AudioInput() {
     const context: StateContext = useContext(stateContext)
-    const contextRef = useRef(context);
-    console.log("context: ", context, context.state)
+    const contextRef = useRef(context)
+    console.log('context: ', context, context.state)
 
     const [isRecording, setIsRecording] = useState<boolean>(false)
     const mediaStream = useRef<MediaStream>(null)
@@ -20,7 +20,7 @@ function AudioInput() {
     const [spaceUp, setSpaceUp] = useState(false)
 
     function downHandler(event: KeyboardEvent) {
-        console.log("hi", contextRef.current.state, spaceDown, spaceUp)
+        console.log('hi', contextRef.current.state, spaceDown, spaceUp)
         console.log('down ', contextRef.current.state)
         if (event.code === 'Space' && contextRef.current.state === 'client') {
             setSpaceDown(true)
@@ -36,7 +36,7 @@ function AudioInput() {
     }
 
     function monitorSpeech() {
-        console.log("hi monitor", contextRef.current.state, spaceDown, spaceUp)
+        console.log('hi monitor', contextRef.current.state, spaceDown, spaceUp)
         if (contextRef.current.state === 'client') {
             if (spaceDown === true && spaceUp === false) {
                 setIsRecording(true)
@@ -75,7 +75,7 @@ function AudioInput() {
                         interaction: 'speech',
                         payload: {
                             chunk: base64Audio as string, // uhhh
-                            mimeType: 'audio/webm'
+                            mimeType: 'audio/webm',
                         },
                         isLast: true, // client can only send 1 response
                     }
@@ -96,8 +96,8 @@ function AudioInput() {
     }
 
     useEffect(() => {
-        contextRef.current = context;
-      }, [context]);
+        contextRef.current = context
+    }, [context])
 
     useEffect(() => {
         if (isRecording) {
@@ -120,10 +120,6 @@ function AudioInput() {
     useEffect(() => {
         monitorSpeech()
     }, [spaceDown, spaceUp, contextRef.current.state])
-    
-    useEffect(() => {
-        console.log("State changed: ", context.state);
-    }, [context.state]);
 
     return (
         <>

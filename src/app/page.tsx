@@ -2,17 +2,18 @@ import InteractableSlide from '@/components/InteractableSlide'
 import Navigation from '@/components/Navigation'
 import StateContextProvider, { stateContext } from '@/context/stateContext'
 import Websocket from '@/components/Websocket'
-import ThemeContextProvider from '@/context/themeContext'
+import NoteContextProvider from '@/context/notesContext'
 
 export default function Home() {
     return (
         <StateContextProvider>
             <Websocket />
-            <main className="flex h-full flex-col bg-gray-100">
+            <main className="flex h-full w-full flex-col bg-gray-100 items-center justify-center">
+                <NoteContextProvider>
                 <InteractableSlide>
-                    <div className="h-full w-full">
+                    <div>
                         <h1 className="text-2xl font-bold">Problem 1</h1>
-                        <svg width="250" height="250" className="m-4 p-4">
+                        <svg id="diagramCanvas" width="250" height="250" className="m-4 p-4">
                             <title>Diagram of a circle</title>
                             <circle
                                 id="circle"
@@ -48,7 +49,7 @@ export default function Home() {
                             />
                         </svg>
                         <p
-                            id="main-question"
+                            id="problemText"
                             data-role="interactable"
                             data-type="text"
                             className="p-2"
@@ -57,10 +58,10 @@ export default function Home() {
                             cm.
                         </p>
                         <ol type="a" className="pl-4">
-                            <li id="sub-question-1" data-role="interactable" data-type="text">
+                            <li id="subQuestion1" data-role="interactable" data-type="text">
                                 a) Find the length of arc AB.
                             </li>
-                            <li id="sub-question-2" data-role="interactable" data-type="text">
+                            <li id="subQuestion2" data-role="interactable" data-type="text">
                                 b) What fraction of the circle’s circumference does arc AB
                                 represent?
                             </li>
@@ -68,6 +69,7 @@ export default function Home() {
                     </div>
                 </InteractableSlide>
                 <Navigation />
+                </NoteContextProvider>
             </main>
         </StateContextProvider>
     )

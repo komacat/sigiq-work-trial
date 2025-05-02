@@ -32,3 +32,8 @@ export type StateContext = {
     state: string
     setState: (arg0: string) => void
 }
+
+export type NoteContext = {
+    notes: boolean,
+    toggleNotes: () => void
+}

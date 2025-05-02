@@ -9,7 +9,7 @@ import { stateContext } from '@/context/stateContext'
 
 export function Websocket() {
     const context: StateContext = useContext(stateContext)
-    
+
     const [connected, setConnected] = useState(false)
     const reconnectAttemptsRef = useRef(0)
     const socketRef = useRef<WebSocket | null>(null)
@@ -18,10 +18,10 @@ export function Websocket() {
 
     function connect() {
         const ws = new WebSocket('ws://localhost:8080')
-        socketRef.current = ws;
+        socketRef.current = ws
 
         ws.onopen = function () {
-            console.log("Client connected")
+            console.log('Client connected')
             setConnected(true)
             reconnectAttemptsRef.current = 0
             ws.send(JSON.stringify({ message: 'next-instruction' }))
@@ -31,17 +31,16 @@ export function Websocket() {
             console.log('event: ', message.data)
             const data = JSON.parse(message.data)
             if (data.message === 'script-done') {
-                console.log("script has completed")
+                console.log("setting state to inactive")
                 context.setState('inactive')
-                localStorage.setItem('state', 'inactive')
             }
             switch (data.interaction) {
                 case 'point':
                     emitter.emit('point', data)
-                    break;
+                    break
                 case 'audio':
                     emitter.emit('audio', data)
-                    break;
+                    break
             }
         }
 
@@ -89,7 +88,7 @@ export function Websocket() {
 
         emitter.on('audio', async (event) => {
             const i = event as Interaction
-            console.log("audio emitter")
+            console.log('audio emitter')
             console.log(i.payload.chunk)
             console.log(i.payload.mimeType)
             if (i.payload.chunk && i.payload.mimeType) {
@@ -107,7 +106,6 @@ export function Websocket() {
         emitter.on('tutor-done', () => {
             console.log('tutor-done')
             context.setState('client')
-            localStorage.setItem('state', 'client')
             socketRef.current?.send(JSON.stringify({ message: 'tutor-done' }))
         })
 
@@ -115,7 +113,6 @@ export function Websocket() {
             console.log('client is done, giving control to server')
             console.log('client-done')
             context.setState('tutor')
-            localStorage.setItem('state', 'tutor')
             socketRef.current?.send(JSON.stringify({ message: 'client-done' }))
         })
         return () => {

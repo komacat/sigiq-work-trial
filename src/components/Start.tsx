@@ -5,7 +5,7 @@ import { useContext } from 'react'
 
 export function Start() {
     const context = useContext(stateContext)
-    
+
     function handleStart() {
         if (context.state === 'inactive') {
             console.log('start')
@@ -17,7 +17,7 @@ export function Start() {
     }
     if (context.state === 'inactive') {
         return (
-            <button
+            <button id="btnStart"
                 className="rounded-3xl border-2 border-solid border-gray-400 p-4"
                 onClick={handleStart}
             >
@@ -32,3 +32,4 @@ export function Start() {
         )
     }
 }
+export default Start
