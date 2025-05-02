@@ -1,10 +1,10 @@
-const speech_1 = require('./audio')
+import {speech_1} from './audio.js'
 
-const script = [
+export const script = [
     {
         interaction: 'audio',
         payload: {
-            chunk: Object.values(speech_1)[0].toString(),
+            chunk: speech_1,
             mimeType: 'audio/webm',
             transcription: "This is an example transcription for the tutor's voice message",
         },
@@ -47,7 +47,3 @@ const script = [
         isLast: true,
     },
 ]
-
-module.exports = {
-    script,
-}
