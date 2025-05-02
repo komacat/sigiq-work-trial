@@ -3,12 +3,12 @@ import { Point } from '@/lib/types'
 export async function pointTo(elementId: string) {
     await new Promise((r) => setTimeout(r, 1000))
 
-    let element = document.getElementById(elementId)
+    const element = document.getElementById(elementId)
     if (!element) {
         throw new Error('Element not found')
     }
 
-    let elementBox = element?.getBoundingClientRect()
+    const elementBox = element?.getBoundingClientRect()
     if (!elementBox) {
         throw new Error('Element bounding box not found')
     }
@@ -21,12 +21,12 @@ export async function pointTo(elementId: string) {
         document.body.appendChild(cursor)
     }
     // starting point
-    let cursorBox = cursor.getBoundingClientRect()
+    const cursorBox = cursor.getBoundingClientRect()
     if (!cursorBox) {
         throw new Error('Cursor bounding box not found')
     }
     console.log('cursorBox', cursorBox)
-    let src: Point = {
+    const src: Point = {
         x: cursorBox.left || 0,
         y: cursorBox.top || 0,
     }
