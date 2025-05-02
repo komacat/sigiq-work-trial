@@ -30,7 +30,7 @@
         "src/components/WSContext.jsx",
         "src/WSContext.js",
         "src/components/WSConsumer.jsx",
-        "server/server.js",
+        "server/server.cjs",
         "src/context/themeContext.js",
         "src/context/themeContext.js",
         "src/utils/encode.js",

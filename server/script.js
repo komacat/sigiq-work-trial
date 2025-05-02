@@ -22,6 +22,14 @@ const script = [
         payload: {
             elementId: 'problemText',
         },
+        isLast: false,
+    },
+    {
+        interaction: 'highlight',
+        payload: {
+            elementId: 'problemText',
+            highlight: 'Two radii OA and OB form a 60° angle in a circle.'
+        },
         isLast: true,
     },
     {

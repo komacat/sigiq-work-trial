@@ -79,3 +79,12 @@ export async function playAudio(base64String: string, mimeType: string) {
         await new Promise((r) => setTimeout(r, 1000))
     })
 }
+
+export async function highlight(text: string, elementId: string) {
+    const element = document.getElementById(elementId)
+    if (!element) {
+        throw new Error('Element not found')
+    }
+    const elementText = element.textContent
+    console.log(elementText)
+}

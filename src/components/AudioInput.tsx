@@ -106,7 +106,7 @@ function AudioInput() {
 
     useEffect(() => {
         monitorSpeech()
-    }, [spaceDown, spaceUp, contextRef.current.state])
+    }, [monitorSpeech])
 
     return (
         <>
