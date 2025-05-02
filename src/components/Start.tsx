@@ -1,31 +1,34 @@
 'use client'
+import { stateContext } from '@/context/stateContext'
 import emitter from '@/utils/emitter'
-import connect from '@/utils/websocket'
+import { useContext } from 'react'
 
-export function Start({
-    sessionActive,
-    setSessionActive,
-}: {
-    sessionActive: boolean
-    setSessionActive: (arg0: boolean) => void
-}) {
+export function Start() {
+    const context = useContext(stateContext)
+    
     function handleStart() {
-        if (!sessionActive) {
-            console.log('next-instruction')
-            emitter.emit('next-instruction')
-            setSessionActive(true)
-            connect()
+        if (context.state === 'inactive') {
+            console.log('start')
+            emitter.emit('start')
+            context.setState('tutor')
         } else {
             console.log('session active')
         }
     }
-    if (!sessionActive) {
+    if (context.state === 'inactive') {
         return (
-            <button className="border-gray-400 border-solid border-2 rounded-3xl p-4" onClick={handleStart}>
+            <button
+                className="rounded-3xl border-2 border-solid border-gray-400 p-4"
+                onClick={handleStart}
+            >
                 start
             </button>
         )
     } else {
-        return <button className="border-gray-300 border-solid border-2 bg-gray-300 rounded-3xl p-4">session in progress</button>
+        return (
+            <button className="rounded-3xl border-2 border-solid border-gray-300 bg-gray-300 p-4">
+                session in progress
+            </button>
+        )
     }
 }

@@ -34,6 +34,6 @@
         "src/context/themeContext.js",
         "src/context/themeContext.js",
         "src/utils/encode.js"
-    ],
+, "server/script.js"    ],
     "exclude": ["node_modules"]
 }

@@ -11,6 +11,7 @@ export type Interaction = {
     payload: {
         elementId?: string | null
         chunk?: string | null
+        mimeType?: string | null
         highlight?: string | null
         transcription?: string | null
     }

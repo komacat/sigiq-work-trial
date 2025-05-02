@@ -63,6 +63,19 @@ async function moveTo(element: HTMLElement, src: Point, dst: Point) {
 }
 
 // audio is encoded in base64
-export async function playAudio(audio: string) {
-    console.log('playing :')
+export async function playAudio(base64String: string, mimeType: string) {
+    console.log('playing')
+    const audio = document.createElement('audio')
+    audio.src = `data:${mimeType};base64,${base64String}`;
+    console.log(audio.src)
+
+    return new Promise<void>(async (resolve) => {
+    audio.addEventListener('ended', function() {
+        console.log('Audio playback completed.');
+        resolve()
+      });
+
+    audio.play();
+    await new Promise(r => setTimeout(r, 1000));
+    })
 }

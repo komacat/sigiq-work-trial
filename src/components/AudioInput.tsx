@@ -6,11 +6,12 @@ import type { Interaction, StateContext } from '@/lib/types'
 import emitter from '@/utils/emitter'
 import { audioToBase64 } from '@/utils/encode'
 
-function AudioInput({ sessionActive }: { sessionActive: boolean }) {
+function AudioInput() {
     const context: StateContext = useContext(stateContext)
+    const contextRef = useRef(context);
+    console.log("context: ", context, context.state)
 
     const [isRecording, setIsRecording] = useState<boolean>(false)
-    const [recordedUrl, setRecordedUrl] = useState<string>('')
     const mediaStream = useRef<MediaStream>(null)
     const mediaRecorder = useRef<MediaRecorder>(null)
     const chunks = useRef<Blob[]>([])
@@ -19,21 +20,24 @@ function AudioInput({ sessionActive }: { sessionActive: boolean }) {
     const [spaceUp, setSpaceUp] = useState(false)
 
     function downHandler(event: KeyboardEvent) {
-        console.log("down ", context.state)
-        if (event.code === 'Space' && context.state === 'client') {
+        console.log("hi", contextRef.current.state, spaceDown, spaceUp)
+        console.log('down ', contextRef.current.state)
+        if (event.code === 'Space' && contextRef.current.state === 'client') {
             setSpaceDown(true)
         }
     }
 
     function upHandler(event: KeyboardEvent) {
-        console.log("up ", context.state)
-        if (event.code === 'Space' && context.state === 'client') {
+        console.log('up ', contextRef.current.state)
+        if (event.code === 'Space' && contextRef.current.state === 'client') {
             setSpaceUp(true)
+            setSpaceDown
         }
     }
 
     function monitorSpeech() {
-        if (sessionActive && context.state === 'client') {
+        console.log("hi monitor", contextRef.current.state, spaceDown, spaceUp)
+        if (contextRef.current.state === 'client') {
             if (spaceDown === true && spaceUp === false) {
                 setIsRecording(true)
             } else if (spaceUp === true) {
@@ -41,6 +45,7 @@ function AudioInput({ sessionActive }: { sessionActive: boolean }) {
                 setSpaceDown(false)
                 setSpaceUp(false)
                 emitter.emit('client-done')
+                console.log('contextttt', contextRef.current.state)
             }
         }
     }
@@ -51,24 +56,28 @@ function AudioInput({ sessionActive }: { sessionActive: boolean }) {
             mediaStream.current = stream
             mediaRecorder.current = new MediaRecorder(stream)
 
+            console.log(mediaStream.current)
+            console.log(mediaRecorder.current)
+
             mediaRecorder.current.ondataavailable = (e: BlobEvent) => {
                 if (e.data.size > 0) {
                     chunks.current.push(e.data)
                 }
             }
             mediaRecorder.current.onstop = () => {
+                console.log(chunks.current)
                 const recordedBlob = new Blob(chunks.current, { type: 'audio/webm' })
                 const url = URL.createObjectURL(recordedBlob)
-                setRecordedUrl(url)
-                console.log('recorded url: ', recordedUrl)
-                audioToBase64(recordedUrl).then((base64Audio) => {
+                console.log(url)
+                audioToBase64(url).then((base64Audio) => {
                     console.log(base64Audio)
                     const data: Interaction = {
                         interaction: 'speech',
                         payload: {
                             chunk: base64Audio as string, // uhhh
+                            mimeType: 'audio/webm'
                         },
-                        isLast: true // client can only send 1 response
+                        isLast: true, // client can only send 1 response
                     }
                     emitter.emit('speech', data)
                 })
@@ -85,6 +94,10 @@ function AudioInput({ sessionActive }: { sessionActive: boolean }) {
             mediaRecorder.current.stop()
         }
     }
+
+    useEffect(() => {
+        contextRef.current = context;
+      }, [context]);
 
     useEffect(() => {
         if (isRecording) {
@@ -106,13 +119,21 @@ function AudioInput({ sessionActive }: { sessionActive: boolean }) {
 
     useEffect(() => {
         monitorSpeech()
-    }, [spaceDown, spaceUp])
+    }, [spaceDown, spaceUp, contextRef.current.state])
+    
+    useEffect(() => {
+        console.log("State changed: ", context.state);
+    }, [context.state]);
 
     return (
         <>
             <button
                 id="btnMic"
-                className={isRecording ? 'border-gray-400 border-solid border-2 bg-gray-400 rounded-3xl p-4' : 'border-gray-400 border-solid border-2 bg-gray-200 rounded-3xl p-4'}
+                className={
+                    isRecording
+                        ? 'rounded-3xl border-2 border-solid border-gray-400 bg-gray-400 p-4'
+                        : 'rounded-3xl border-2 border-solid border-gray-400 bg-gray-200 p-4'
+                }
             >
                 press space to speak
             </button>

@@ -4,7 +4,8 @@ const script = [
     {
         interaction: 'audio',
         payload: {
-            chunk: speech_1,
+            chunk: Object.values(speech_1)[0].toString(),
+            mimeType: 'audio/webm',
             transcription: "This is an example transcription for the tutor's voice message",
         },
         isLast: true,
@@ -40,5 +41,5 @@ const script = [
 ]
 
 module.exports = {
-    script
+    script,
 }
