@@ -1,4 +1,4 @@
-import {speech_1} from './audio.js'
+import { speech_1 } from './audio.js'
 
 export const script = [
     {
@@ -28,7 +28,7 @@ export const script = [
         interaction: 'highlight',
         payload: {
             elementId: 'problemText',
-            highlight: 'Two radii OA and OB form a 60° angle in a circle.'
+            highlight: 'Two radii OA and OB form a 60° angle in a circle.',
         },
         isLast: true,
     },

@@ -6,7 +6,7 @@ const app = express()
 const server = createServer(app)
 const wss = new WebSocketServer({ server })
 
-import {script} from './script.js'
+import { script } from './script.js'
 
 function connect() {
     wss.on('connection', (ws) => {
@@ -16,7 +16,7 @@ function connect() {
         ws.on('message', (event) => {
             const data = JSON.parse(event)
             console.log(`Server received: ${data.message}`)
-            console.log("hello: ", script)
+            console.log('hello: ', script)
             if (
                 (data.message === 'next-instruction' || data.message === 'client-done') &&
                 index < script.length

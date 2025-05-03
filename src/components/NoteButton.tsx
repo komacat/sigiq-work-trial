@@ -4,7 +4,7 @@ import { notesContext } from '@/context/notesContext'
 import { useContext } from 'react'
 
 export function NoteButton() {
-    const { notes, toggleNotes } = useContext(notesContext)
+    const { toggleNotes } = useContext(notesContext)
 
     const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.currentTarget.blur()

@@ -30,19 +30,6 @@ function AudioInput() {
         }
     }
 
-    function monitorSpeech() {
-        if (contextRef.current.state === 'client') {
-            if (spaceDown === true && spaceUp === false) {
-                setIsRecording(true)
-            } else if (spaceUp === true) {
-                setIsRecording(false)
-                setSpaceDown(false)
-                setSpaceUp(false)
-                emitter.emit('client-done')
-            }
-        }
-    }
-
     async function startRecording() {
         try {
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
@@ -105,8 +92,20 @@ function AudioInput() {
     }, [])
 
     useEffect(() => {
+        function monitorSpeech() {
+            if (contextRef.current.state === 'client') {
+                if (spaceDown === true && spaceUp === false) {
+                    setIsRecording(true)
+                } else if (spaceUp === true) {
+                    setIsRecording(false)
+                    setSpaceDown(false)
+                    setSpaceUp(false)
+                    emitter.emit('client-done')
+                }
+            }
+        }
         monitorSpeech()
-    }, [monitorSpeech])
+    }, [spaceDown, spaceUp])
 
     return (
         <>

@@ -98,12 +98,12 @@ export async function highlight(text: string, elementId: string) {
 
     // this approach doesn't really work in react....
 
-    elementHTML = elementHTML.substring(0, start) +
-        '<span className="bg-gray-200">' + 
+    elementHTML =
+        elementHTML.substring(0, start) +
+        '<span className="bg-gray-200">' +
         elementHTML.substring(start, end - start + 1) +
         '</span>' +
-        elementHTML.substring(end + 1);
-    element.innerHTML = elementHTML;
-    console.log("new element html: ", elementHTML)
-
+        elementHTML.substring(end + 1)
+    element.innerHTML = elementHTML
+    console.log('new element html: ', elementHTML)
 }

@@ -65,10 +65,20 @@ export default function Home() {
                                 is 5 cm.
                             </p>
                             <ol type="a" className="pl-4">
-                                <li id="subQuestion1" data-role="interactable" data-type="text" className="text-2xl">
+                                <li
+                                    id="subQuestion1"
+                                    data-role="interactable"
+                                    data-type="text"
+                                    className="text-2xl"
+                                >
                                     a) Find the length of arc AB.
                                 </li>
-                                <li id="subQuestion2" data-role="interactable" data-type="text" className="text-2xl">
+                                <li
+                                    id="subQuestion2"
+                                    data-role="interactable"
+                                    data-type="text"
+                                    className="text-2xl"
+                                >
                                     b) What fraction of the circle’s circumference does arc AB
                                     represent?
                                 </li>

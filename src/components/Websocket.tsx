@@ -4,7 +4,6 @@ import { Interaction, StateContext } from '@/lib/types'
 import emitter from '../utils/emitter'
 import { highlight, playAudio, pointTo } from '../utils/instructions'
 import { useContext, useEffect, useRef } from 'react'
-
 import { stateContext } from '@/context/stateContext'
 
 export function Websocket() {
@@ -14,56 +13,56 @@ export function Websocket() {
 
     const maxReconnectDelay = 30000
 
-    function connect() {
-        const ws = new WebSocket('ws://localhost:8080')
-        socketRef.current = ws
-
-        ws.onopen = function () {
-            console.log('Client connected')
-            reconnectAttemptsRef.current = 0
-            ws.send(JSON.stringify({ message: 'next-instruction' }))
-        }
-
-        ws.onmessage = (message) => {
-            console.log('event: ', message.data)
-            const data = JSON.parse(message.data)
-            if (data.message === 'script-done') {
-                console.log('setting state to inactive')
-                context.setState('inactive')
-            }
-            switch (data.interaction) {
-                case 'point':
-                    emitter.emit('point', data)
-                    break
-                case 'audio':
-                    emitter.emit('audio', data)
-                    break
-                case 'highlight':
-                    emitter.emit('highlight', data)
-                    break
-            }
-        }
-
-        ws.onclose = function (e) {
-            console.log('Socket is closed. Reconnect will be attempted in 1 second.', e.reason)
-            scheduleReconnect()
-        }
-
-        ws.onerror = function (err: Event) {
-            console.error('Socket encountered error: ', err, 'Closing socket')
-            ws.close()
-        }
-    }
-
-    const scheduleReconnect = () => {
-        reconnectAttemptsRef.current += 1
-        const delay = Math.min(1000 * 2 ** reconnectAttemptsRef.current, maxReconnectDelay)
-        setTimeout(() => {
-            connect()
-        }, delay)
-    }
-
     useEffect(() => {
+        function connect() {
+            const ws = new WebSocket('ws://localhost:8080')
+            socketRef.current = ws
+
+            ws.onopen = function () {
+                console.log('Client connected')
+                reconnectAttemptsRef.current = 0
+                ws.send(JSON.stringify({ message: 'next-instruction' }))
+            }
+
+            ws.onmessage = (message) => {
+                console.log('event: ', message.data)
+                const data = JSON.parse(message.data)
+                if (data.message === 'script-done') {
+                    console.log('setting state to inactive')
+                    context.setState('inactive')
+                }
+                switch (data.interaction) {
+                    case 'point':
+                        emitter.emit('point', data)
+                        break
+                    case 'audio':
+                        emitter.emit('audio', data)
+                        break
+                    case 'highlight':
+                        emitter.emit('highlight', data)
+                        break
+                }
+            }
+
+            ws.onclose = function (e) {
+                console.log('Socket is closed. Reconnect will be attempted in 1 second.', e.reason)
+                scheduleReconnect()
+            }
+
+            ws.onerror = function (err: Event) {
+                console.error('Socket encountered error: ', err, 'Closing socket')
+                ws.close()
+            }
+        }
+
+        const scheduleReconnect = () => {
+            reconnectAttemptsRef.current += 1
+            const delay = Math.min(1000 * 2 ** reconnectAttemptsRef.current, maxReconnectDelay)
+            setTimeout(() => {
+                connect()
+            }, delay)
+        }
+
         emitter.on('start', () => {
             connect()
         })
@@ -129,7 +128,7 @@ export function Websocket() {
         return () => {
             socketRef.current?.close()
         }
-    }, [])
+    }, [context])
 
     return <></>
 }
