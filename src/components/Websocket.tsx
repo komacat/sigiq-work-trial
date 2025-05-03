@@ -73,7 +73,7 @@ export function Websocket() {
         emitter.on('point', async (event) => {
             const i = event as Interaction
             console.log(i)
-            await pointTo(i.payload.elementId as string) // uhhh
+            const dst = await pointTo(i.payload.elementId as string, i.payload.start) // uhhh
             if (i.isLast === false) {
                 socketRef.current?.send(JSON.stringify({ message: 'next-instruction' }))
             } else {

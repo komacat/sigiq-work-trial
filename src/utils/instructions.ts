@@ -1,6 +1,6 @@
 import { Point } from '@/lib/types'
 
-export async function pointTo(elementId: string) {
+export async function pointTo(elementId: string, start: Point): Promise<Point> {
     // small break inbetween this event to simulate tutor thinking
     await new Promise((r) => setTimeout(r, 1000))
 
@@ -27,9 +27,13 @@ export async function pointTo(elementId: string) {
         throw new Error('Cursor bounding box not found')
     }
     console.log('cursorBox', cursorBox)
-    const src: Point = {
+
+    let src: Point = {
         x: cursorBox.left || 0,
         y: cursorBox.top || 0,
+    }
+    if (start) {
+        src = start
     }
     const dst: Point = {
         x: elementBox.left + elementBox.width / 2 || 0,
@@ -38,6 +42,7 @@ export async function pointTo(elementId: string) {
     console.log('src', src)
     console.log('dst', dst)
     await moveTo(cursor, src, dst)
+    return dst
 }
 
 async function moveTo(element: HTMLElement, src: Point, dst: Point) {

@@ -1,14 +1,28 @@
-import React from 'react'
+"use client"
 
-function Highlighter({ children, highlight }: { children: React.ReactNode; highlight: string }) {
-    if (!children || !highlight) {
+import { useEffect, useRef } from "react";
+
+function Highlighter({ children }: { children: React.ReactNode}) {
+    const ref = useRef<HTMLDivElement>(null)
+    
+    useEffect(() => {
+        console.log(ref.current?.textContent)
+        if (ref.current) {
+          ref.current.style.backgroundColor = 'yellow';
+        }
+      }, []);
+
+    if (!children) {
         return children
     }
-    console.log("children ", children)
-    // const regexp = new RegExp(highlight, 'g')
-    // const matches = children.match(regexp)
 
-    // const parts = children.split(new RegExp(`${highlight.replace()}`, 'g'))
+    const elementText = ref.current?.textContent
+    if (!elementText) {
+        return children
+    }
+    // const regexp = new RegExp(highlight, 'g')
+    // const matches = elementText.match(regexp)
+    // const parts = elementText.split(new RegExp(`${highlight.replace()}`, 'g'))
 
     // for (let i = 0; i < parts.length; i++) {
     //     if (i !== parts.length - 1) {
@@ -28,6 +42,7 @@ function Highlighter({ children, highlight }: { children: React.ReactNode; highl
     // console.log(matches, parts)
 
     // return <div className="highlighter">{parts}</div>
-    return <></>
+    return <div ref={ref}>{children}</div>
 }
 export default Highlighter
+
