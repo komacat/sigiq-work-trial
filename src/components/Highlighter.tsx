@@ -4,7 +4,7 @@ function Highlighter({ children, highlight }: { children: React.ReactNode; highl
     if (!children || !highlight) {
         return children
     }
-    console.log(children)
+    console.log("children ", children)
     // const regexp = new RegExp(highlight, 'g')
     // const matches = children.match(regexp)
 
