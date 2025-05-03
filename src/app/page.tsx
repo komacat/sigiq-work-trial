@@ -5,12 +5,10 @@ import StateContextProvider from '@/context/stateContext'
 import Websocket from '@/components/Websocket'
 import NoteContextProvider from '@/context/notesContext'
 import { themeContext } from '@/context/themeContext'
-import { useContext, useState } from 'react'
-import Highlighter from '@/components/Highlighter'
+import { useContext } from 'react'
 
 export default function Home() {
     const { theme } = useContext(themeContext)
-    const [highlight, setHighlight] = useState<string>("")
     
     return (
         <StateContextProvider>
@@ -58,7 +56,7 @@ export default function Home() {
                                     data-type="shape"
                                 />
                             </svg>
-                            <Highlighter highlight={highlight}><p
+                            <p
                                 id="problemText"
                                 data-role="interactable"
                                 data-type="text"
@@ -67,7 +65,6 @@ export default function Home() {
                                 Two radii OA and OB form a 60° angle in a circle. The radius length
                                 is 5 cm.
                             </p>
-                            </Highlighter>
                             <ol type="a" className="pl-4">
                                 <li
                                     id="subQuestion1"
